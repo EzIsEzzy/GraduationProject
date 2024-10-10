@@ -20,6 +20,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'username',
+        'picture',
+        'gender',
+        'birthdate'
     ];
 
     /**
@@ -43,5 +47,47 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //relations
+    public function posts()
+    {
+        //a user can have many posts appended to him
+        return $this->hasMany(Post::class);
+    }
+    public function likes()
+    {
+        //a user can like as many posts and comments as he can, it can be appended to him
+        return $this->hasMany(Like::class);
+    }
+    public function comments()
+    {
+        //a user can have many comments, same post or not
+        return $this->hasMany(Comment::class);
+    }
+    public function jobs()
+    {
+        //a user can publish many jobs
+        return $this->hasMany(Job::class);
+    }
+    public function job_applies()
+    {
+        //a user can apply to many jobs (per requirement)
+        return $this->hasMany(JobApply::class);
+    }
+    public function friend_requests()
+    {
+        //a user can send many friend requests
+        return $this->hasMany(FriendRequest::class);
+    }
+    public function user_work_data()
+    {
+        //a user can only have one work data (like a work info in the profile)
+        return $this->hasOne(UserWorkData::class);
+    }
+    public function comment_likes()
+    {
+        //a user can like many comments
+        return $this->hasMany(CommentLike::class);
     }
 }
